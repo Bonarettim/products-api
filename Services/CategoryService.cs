@@ -13,12 +13,23 @@ public class CategoryService
     }
 
 
-    public async Task<List<Category>> GetAll(int page, int pageSize)
+    public async Task<object> GetAll(int page, int pageSize, string? search)
     {
-        return await _context.Categories
+        var query = _context.Categories.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(p => p.Name.Contains(search));
+        }
+
+        var total = await query.CountAsync();
+
+        var data = await query
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
+
+        return new { total, data };
     }
     public async Task<Category?> GetById(int id)
     {

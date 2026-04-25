@@ -4,8 +4,26 @@ using ProductApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔥 ESSENCIAL
-builder.Services.AddControllers();
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+// Controllers + JSON
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -14,18 +32,16 @@ builder.Services.AddSwaggerGen();
 // Db
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<CategoryService>();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = 
-            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-    });
 
-// Service
+// Services
+builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<ProductService>();
 
+// 🔥 AGORA SIM build
 var app = builder.Build();
+
+// Middleware
+app.UseCors("AllowFrontend");
 
 if (app.Environment.IsDevelopment())
 {
@@ -35,7 +51,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// 🔥 ESSENCIAL
 app.MapControllers();
 
 app.Run();

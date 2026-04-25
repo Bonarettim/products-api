@@ -1,6 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CategoryApi.DTOs;
 
 public class CategoryCreateDTO
 {
-    public string Name { get; set; }
+     [Required(ErrorMessage = "Nome é obrigatório")]
+        public string ? Name { get; set; }
 }

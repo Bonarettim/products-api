@@ -13,11 +13,14 @@ public class ProductService
         if (dto.Stock < 0)
             throw new Exception("Estoque não pode ser negativo");
 
+        if (string.IsNullOrWhiteSpace(dto.SKU))
+            throw new Exception("SKU não pode ser vazio");
+
         var category = await _context.Categories.FindAsync(dto.CategoryId);
         if (category == null)
             throw new Exception("Categoria inválida");
 
-        if (category.Name == "Eletronico" && dto.Price < 50)
+        if (category.Name == "Eletrônicos" && dto.Price < 50)
             throw new Exception("Preço mínimo para eletrônicos é R$50");
 
         var exists = await _context.Products
@@ -34,13 +37,24 @@ public class ProductService
         _context = context;
     }
 
-    public async Task<List<Product>> GetAll(int page, int pageSize)
+    public async Task<object> GetAll(int page, int pageSize, string? search)
     {
-        return await _context.Products
-            .Include(p => p.Category)
+        var query = _context.Products.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(p => p.Name.Contains(search));
+        }
+
+        var total = await query.CountAsync();
+
+        var data = await query
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
+            .Include(p => p.Category)
             .ToListAsync();
+
+        return new { total, data };
     }
 
     public async Task<Product?> GetById(int id)
