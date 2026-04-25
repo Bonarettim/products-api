@@ -50,6 +50,13 @@ cd ProductApi
 
 ### 2. Configurar banco de dados
 
+## 🗄️ Banco de dados
+
+1. Criar banco no PostgreSQL
+2. Rodar:
+
+dotnet ef database update
+
 No arquivo `appsettings.json`, altere a connection string:
 
 ```json
