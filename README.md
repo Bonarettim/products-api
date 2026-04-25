@@ -37,25 +37,23 @@ Antes de rodar o projeto, você precisa ter instalado:
 
 ---
 
-## 🔧 Configuração do projeto
-
-### 1. Clonar repositório
+## ⚡ Rodando o projeto (rápido)
 
 ```bash
 git clone https://github.com/SEU_USUARIO/SEU_REPO.git
 cd ProductApi
+
+dotnet ef database update
+dotnet run
 ```
 
 ---
 
-### 2. Configurar banco de dados
+## 🔧 Configuração do banco de dados
 
-## 🗄️ Banco de dados
+1. Crie um banco no PostgreSQL (ex: `products_db`)
 
-1. Criar banco no PostgreSQL
-2. Rodar:
-
-No arquivo `appsettings.json`, altere a connection string:
+2. Configure a connection string no arquivo `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
@@ -63,20 +61,10 @@ No arquivo `appsettings.json`, altere a connection string:
 }
 ```
 
----
-
-### 3. Rodar migrations (se estiver usando)
+3. Execute as migrations para criar as tabelas:
 
 ```bash
 dotnet ef database update
-```
-
----
-
-### 4. Rodar o projeto
-
-```bash
-dotnet run
 ```
 
 ---
