@@ -1,3 +1,10 @@
+<img width="1481" height="472" alt="Screenshot 2026-04-25 at 18 02 47" src="https://github.com/user-attachments/assets/6c951c83-83c8-48b7-8b35-c5748fa3da4c" />
+
+
+<img width="1503" height="371" alt="Screenshot 2026-04-25 at 18 03 09" src="https://github.com/user-attachments/assets/f07a508b-2bb0-4f30-87a7-9d5d88e558f0" />
+
+
+
 # 🧾 Product API
 
 API RESTful desenvolvida em **.NET (C#)** para gerenciamento de produtos e categorias.
