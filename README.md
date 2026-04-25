@@ -1,3 +1,8 @@
+# 🚀 Product API
+API RESTful para gerenciamento de produtos e categorias
+
+
+## 📸 Preview
 <img width="1481" height="472" alt="Screenshot 2026-04-25 at 18 02 47" src="https://github.com/user-attachments/assets/6c951c83-83c8-48b7-8b35-c5748fa3da4c" />
 
 
@@ -158,6 +163,13 @@ A aplicação utiliza `ILogger` para registrar:
 * Deploy em nuvem
 
 ---
+
+
+## 🔗 Frontend
+
+Interface disponível em:
+https://github.com/Bonarettim/products-front
+
 
 ## 👨‍💻 Autor
 
