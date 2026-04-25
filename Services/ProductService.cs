@@ -43,7 +43,7 @@ public class ProductService
 
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query = query.Where(p => p.Name.Contains(search));
+            query = query.Where(p => p.Name != null && p.Name.Contains(search));
         }
 
         var total = await query.CountAsync();
@@ -73,7 +73,7 @@ public class ProductService
             Name = dto.Name,
             Price = dto.Price,
             Stock = dto.Stock,
-            SKU = dto.SKU,
+            SKU = dto.SKU!,
             CategoryId = dto.CategoryId
         };
 
@@ -95,7 +95,7 @@ public class ProductService
         product.Name = dto.Name;
         product.Price = dto.Price;
         product.Stock = dto.Stock;
-        product.SKU = dto.SKU;
+        product.SKU = dto.SKU!;
         product.CategoryId = dto.CategoryId;
 
         await _context.SaveChangesAsync();

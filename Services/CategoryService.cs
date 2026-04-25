@@ -19,7 +19,7 @@ public class CategoryService
 
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query = query.Where(p => p.Name.Contains(search));
+            query = query.Where(p => p.Name != null && p.Name.Contains(search));
         }
 
         var total = await query.CountAsync();
@@ -37,31 +37,31 @@ public class CategoryService
     }
 
     public async Task<Category> Create(CategoryCreateDTO dto)
-{
-    var category = new Category
     {
-        Name = dto.Name
-    };
+        var category = new Category
+        {
+            Name = dto.Name
+        };
 
-    _context.Categories.Add(category);
-    await _context.SaveChangesAsync();
+        _context.Categories.Add(category);
+        await _context.SaveChangesAsync();
 
-    return category;
-}
+        return category;
+    }
 
     public async Task<Category> Update(int id, CategoryCreateDTO dto)
-{
-    var category = await _context.Categories.FindAsync(id);
+    {
+        var category = await _context.Categories.FindAsync(id);
 
-    if (category == null)
-        throw new Exception("Categoria não encontrada");
+        if (category == null)
+            throw new Exception("Categoria não encontrada");
 
-    category.Name = dto.Name;
+        category.Name = dto.Name;
 
-    await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-    return category;
-}
+        return category;
+    }
 
     public async Task Delete(int id)
     {
